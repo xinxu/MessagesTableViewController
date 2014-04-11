@@ -232,7 +232,7 @@
     self.textView.frame = CGRectIntegral(textFrame);
     self.attachmentView.frame = CGRectMake(attachmentX, self.bubbleImageView.frame.origin.y, attachmentWidth, _attachmentHeight);
     UIBezierPath *maskPath;
-    maskPath = [UIBezierPath bezierPathWithRoundedRect:self.attachmentView.bounds byRoundingCorners:(UIRectCornerTopLeft | UIRectCornerTopRight) cornerRadii:CGSizeMake(16.0, 16.0)];
+    maskPath = [UIBezierPath bezierPathWithRoundedRect:self.attachmentView.bounds byRoundingCorners:(UIRectCornerTopLeft | UIRectCornerTopRight) cornerRadii:CGSizeMake(14.0, 14.0)];
     
     CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
     maskLayer.frame = self.bounds;

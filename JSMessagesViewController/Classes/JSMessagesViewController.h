@@ -117,6 +117,8 @@
  */
 - (NSString *)customCellIdentifierForRowAtIndexPath:(NSIndexPath *)indexPath;
 
+- (CGFloat)attachmentHeightForRowAtIndexPath:(NSIndexPath *)indexPath;
+
 @end
 
 

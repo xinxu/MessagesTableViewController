@@ -47,6 +47,9 @@
  */
 @property (strong, nonatomic) UIFont *font UI_APPEARANCE_SELECTOR;
 
+@property (weak, nonatomic, readonly) UIView *attachmentView;
+
+
 #pragma mark - Initialization
 
 /**
@@ -60,6 +63,7 @@
  */
 - (instancetype)initWithFrame:(CGRect)frame
                    bubbleType:(JSBubbleMessageType)bubleType
+               attachmentViewHeight:(CGFloat)height
               bubbleImageView:(UIImageView *)bubbleImageView;
 
 #pragma mark - Getters

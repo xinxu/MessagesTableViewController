@@ -235,8 +235,14 @@
     JSBubbleMessageCell *cell = (JSBubbleMessageCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (!cell) {
+        CGFloat attachmentHeight = 0;
+        if ([self.delegate respondsToSelector:@selector(attachmentHeightForRowAtIndexPath:)])
+        {
+            attachmentHeight = [self.delegate attachmentHeightForRowAtIndexPath:indexPath];
+        }
         cell = [[JSBubbleMessageCell alloc] initWithBubbleType:type
                                                bubbleImageView:bubbleImageView
+                                              attachmentHeight:attachmentHeight
                                                        message:message
                                              displaysTimestamp:displayTimestamp
                                                      hasAvatar:avatar != nil
@@ -265,8 +271,14 @@
     if ([self.delegate respondsToSelector:@selector(shouldDisplayTimestampForRowAtIndexPath:)]) {
         displayTimestamp = [self.delegate shouldDisplayTimestampForRowAtIndexPath:indexPath];
     }
+    CGFloat attachmentHeight = 0;
+    if ([self.delegate respondsToSelector:@selector(attachmentHeightForRowAtIndexPath:)])
+    {
+        attachmentHeight = [self.delegate attachmentHeightForRowAtIndexPath:indexPath];
+    }
     
     return [JSBubbleMessageCell neededHeightForBubbleMessageCellWithMessage:message
+                                                           attachmentHeight:attachmentHeight
                                                              displaysAvatar:avatar != nil
                                                           displaysTimestamp:displayTimestamp];
 }

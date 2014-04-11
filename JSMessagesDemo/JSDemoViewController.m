@@ -129,10 +129,15 @@
 
 - (BOOL)shouldDisplayTimestampForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    return YES;
+}
+
+- (CGFloat)attachmentHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     if (indexPath.row % 3 == 0) {
-        return YES;
+        return 100;
     }
-    return NO;
+    return 0;
 }
 
 //

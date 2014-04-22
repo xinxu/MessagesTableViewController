@@ -49,7 +49,6 @@
 
 @property (weak, nonatomic, readonly) UIView *attachmentView;
 
-
 #pragma mark - Initialization
 
 /**
@@ -63,8 +62,9 @@
  */
 - (instancetype)initWithFrame:(CGRect)frame
                    bubbleType:(JSBubbleMessageType)bubleType
-               attachmentViewHeight:(CGFloat)height
               bubbleImageView:(UIImageView *)bubbleImageView;
+
+- (void)setAttachmentHeight:(CGFloat)height;
 
 #pragma mark - Getters
 

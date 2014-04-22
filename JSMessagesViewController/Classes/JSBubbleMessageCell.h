@@ -62,7 +62,6 @@
  */
 - (instancetype)initWithBubbleType:(JSBubbleMessageType)type
                    bubbleImageView:(UIImageView *)bubbleImageView
-                  attachmentHeight:(CGFloat)height
                            message:(id<JSMessageData>)message
                  displaysTimestamp:(BOOL)displaysTimestamp
                          hasAvatar:(BOOL)hasAvatar

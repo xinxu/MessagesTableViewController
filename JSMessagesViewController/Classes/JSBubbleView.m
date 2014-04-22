@@ -35,9 +35,7 @@
 + (CGSize)textSizeForText:(NSString *)txt;
 + (CGSize)neededSizeForText:(NSString *)text;
 + (CGFloat)neededHeightForText:(NSString *)text;
-
-@property (nonatomic, assign) CGFloat attachmentHeight;
-
+@property (nonatomic, assign) CGFloat aHeight;
 @end
 
 
@@ -54,20 +52,6 @@
 }
 
 #pragma mark - Initialization
-
-- (instancetype)initWithFrame:(CGRect)frame bubbleType:(JSBubbleMessageType)bubleType attachmentViewHeight:(CGFloat)height bubbleImageView:(UIImageView *)bubbleImageView
-{
-    self = [self initWithFrame:frame bubbleType:bubleType bubbleImageView:bubbleImageView];
-    if (self)
-    {
-        self.attachmentHeight = height;
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].applicationFrame.size.width * 0.70f, height)];
-        view.backgroundColor = [UIColor whiteColor];
-        _attachmentView = view;
-        [self addSubview:view];
-    }
-    return self;
-}
 
 - (instancetype)initWithFrame:(CGRect)frame
                    bubbleType:(JSBubbleMessageType)bubleType
@@ -104,6 +88,11 @@
         }
         
         [self addTextViewObservers];
+        self.aHeight = 0;
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].applicationFrame.size.width * 0.70f, 0)];
+        view.backgroundColor = [UIColor whiteColor];
+        _attachmentView = view;
+        [self addSubview:view];
         
 //        NOTE: TODO: textView frame & text inset
 //        --------------------
@@ -174,6 +163,11 @@
     _textView.font = font;
 }
 
+- (void)setAttachmentHeight:(CGFloat)height {
+    self.aHeight = height;
+    [self setNeedsLayout];
+}
+
 #pragma mark - UIAppearance Getters
 
 - (UIFont *)font
@@ -194,11 +188,11 @@
 - (CGRect)bubbleFrame
 {
     CGSize bubbleSize = [JSBubbleView neededSizeForText:self.textView.text];
-    if (_attachmentHeight > 0)
+    if (_aHeight > 0)
     {
         CGFloat maxWidth = [UIScreen mainScreen].applicationFrame.size.width * 0.70f;
         bubbleSize.width = maxWidth;
-        bubbleSize.height += _attachmentHeight;
+        bubbleSize.height += _aHeight;
     }
     
     return CGRectIntegral(CGRectMake((self.type == JSBubbleMessageTypeOutgoing ? self.frame.size.width - bubbleSize.width : 0.0f),
@@ -225,12 +219,12 @@
     }
     
     CGRect textFrame = CGRectMake(textX,
-                                  self.bubbleImageView.frame.origin.y + _attachmentHeight,
+                                  self.bubbleImageView.frame.origin.y + _aHeight,
                                   self.bubbleImageView.frame.size.width - (self.bubbleImageView.image.capInsets.right / 2.0f),
-                                  self.bubbleImageView.frame.size.height - kMarginTop - _attachmentHeight);
+                                  self.bubbleImageView.frame.size.height - kMarginTop - _aHeight);
     
     self.textView.frame = CGRectIntegral(textFrame);
-    self.attachmentView.frame = CGRectMake(attachmentX, self.bubbleImageView.frame.origin.y, attachmentWidth, _attachmentHeight);
+    self.attachmentView.frame = CGRectMake(attachmentX, self.bubbleImageView.frame.origin.y, attachmentWidth, _aHeight);
     UIBezierPath *maskPath;
     maskPath = [UIBezierPath bezierPathWithRoundedRect:self.attachmentView.bounds byRoundingCorners:(UIRectCornerTopLeft | UIRectCornerTopRight) cornerRadii:CGSizeMake(14.0, 14.0)];
     

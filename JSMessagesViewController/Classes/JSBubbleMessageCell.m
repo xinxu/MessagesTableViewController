@@ -127,7 +127,6 @@ static const CGFloat kJSSubtitleLabelHeight = 15.0f;
 
 - (void)configureWithType:(JSBubbleMessageType)type
           bubbleImageView:(UIImageView *)bubbleImageView
-         attachmentHeight:(CGFloat)height
                   message:(id<JSMessageData>)message
          displaysTimestamp:(BOOL)displaysTimestamp
                    avatar:(BOOL)hasAvatar
@@ -163,7 +162,6 @@ static const CGFloat kJSSubtitleLabelHeight = 15.0f;
     
     JSBubbleView *bubbleView = [[JSBubbleView alloc] initWithFrame:frame
                                                         bubbleType:type
-                                              attachmentViewHeight:height
                                                    bubbleImageView:bubbleImageView];
     
     bubbleView.autoresizingMask = (UIViewAutoresizingFlexibleWidth
@@ -188,7 +186,6 @@ static const CGFloat kJSSubtitleLabelHeight = 15.0f;
 
 - (instancetype)initWithBubbleType:(JSBubbleMessageType)type
                    bubbleImageView:(UIImageView *)bubbleImageView
-                  attachmentHeight:(CGFloat)height
                            message:(id<JSMessageData>)message
                  displaysTimestamp:(BOOL)displaysTimestamp
                          hasAvatar:(BOOL)hasAvatar
@@ -198,7 +195,6 @@ static const CGFloat kJSSubtitleLabelHeight = 15.0f;
     if (self) {
         [self configureWithType:type
                 bubbleImageView:bubbleImageView
-                attachmentHeight:height
                         message:message
               displaysTimestamp:displaysTimestamp
                          avatar:hasAvatar];
@@ -224,6 +220,9 @@ static const CGFloat kJSSubtitleLabelHeight = 15.0f;
     self.timestampLabel.text = nil;
     self.avatarImageView = nil;
     self.subtitleLabel.text = nil;
+    for (UIView *subView in self.bubbleView.attachmentView.subviews) {
+        [subView removeFromSuperview];
+    }
 }
 
 - (void)setBackgroundColor:(UIColor *)color
@@ -245,6 +244,10 @@ static const CGFloat kJSSubtitleLabelHeight = 15.0f;
     self.timestampLabel.text = [NSDateFormatter localizedStringFromDate:date
                                                               dateStyle:NSDateFormatterMediumStyle
                                                               timeStyle:NSDateFormatterShortStyle];
+}
+
+- (void)setAttachmentHeight:(CGFloat)height {
+    
 }
 
 - (void)setSubtitle:(NSString *)subtitle

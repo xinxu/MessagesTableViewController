@@ -235,21 +235,21 @@
     JSBubbleMessageCell *cell = (JSBubbleMessageCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (!cell) {
-        CGFloat attachmentHeight = 0;
-        if ([self.delegate respondsToSelector:@selector(attachmentHeightForRowAtIndexPath:)])
-        {
-            attachmentHeight = [self.delegate attachmentHeightForRowAtIndexPath:indexPath];
-        }
         cell = [[JSBubbleMessageCell alloc] initWithBubbleType:type
                                                bubbleImageView:bubbleImageView
-                                              attachmentHeight:attachmentHeight
                                                        message:message
                                              displaysTimestamp:displayTimestamp
                                                      hasAvatar:avatar != nil
                                                reuseIdentifier:CellIdentifier];
     }
     
+    CGFloat attachmentHeight = 0;
+    if ([self.delegate respondsToSelector:@selector(attachmentHeightForRowAtIndexPath:)])
+    {
+        attachmentHeight = [self.delegate attachmentHeightForRowAtIndexPath:indexPath];
+    }
     [cell setMessage:message];
+    [cell.bubbleView setAttachmentHeight:attachmentHeight];
     [cell setAvatarImageView:avatar];
     [cell setBackgroundColor:tableView.backgroundColor];
 	
